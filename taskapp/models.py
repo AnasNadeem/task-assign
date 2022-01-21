@@ -19,6 +19,8 @@ class Task(models.Model):
     progress = models.CharField(max_length=12, choices=TASK_PROGRESS, default='Pending')
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     assigned_to = models.ManyToManyField(User, blank=True, related_name='assigned')
-    created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
