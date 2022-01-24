@@ -9,11 +9,17 @@ Authorization: ApiKey tyrion:61de36c3e42b82d2b8ef33d74f86a3652f0ac417
 ### Task List - POST
 POST http://127.0.0.1:8000/api/task/ HTTP/1.1
 Content-Type: application/json
-Authorization: ApiKey tyrion:61de36c3e42b82d2b8ef33d74f86a3652f0ac417
+Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
 
 {
-    "title":"Watch AOT",
-    "desctiption":"Dark fantasy drama"
+    "title":"Winter is coming",
+    "desctiption":"Dark fantasy drama",
+    "assigned_to": [
+        {
+          "id": 5,
+          "username": "tyrion"
+        }
+      ]
 }
 
 ### Register Schema
