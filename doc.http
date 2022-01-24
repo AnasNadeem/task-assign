@@ -1,9 +1,22 @@
-### Task List
-
+### Task List Schema
 GET http://127.0.0.1:8000/api/task/schema/?format=json HTTP/1.1
+Authorization: ApiKey tyrion:61de36c3e42b82d2b8ef33d74f86a3652f0ac417
+
+### Task List - GET
+GET http://127.0.0.1:8000/api/task/ HTTP/1.1
+Authorization: ApiKey tyrion:61de36c3e42b82d2b8ef33d74f86a3652f0ac417
+
+### Task List - POST
+POST http://127.0.0.1:8000/api/task/ HTTP/1.1
+Content-Type: application/json
+Authorization: ApiKey tyrion:61de36c3e42b82d2b8ef33d74f86a3652f0ac417
+
+{
+    "title":"Watch Demon Slayer",
+    "description":"Its Manga's great"
+}
 
 ### Register Schema
-
 GET http://127.0.0.1:8000/api/register/schema/?format=json HTTP/1.1
 Content-Type: application/json
 

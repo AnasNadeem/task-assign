@@ -1,6 +1,6 @@
 from tastypie.resources import ModelResource
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate
 from tastypie.authorization import Authorization
 from django.db import IntegrityError
 from tastypie.exceptions import BadRequest
@@ -44,12 +44,9 @@ class LoginResource(ModelResource):
 
     def login(self, request, **kwargs):
         self.method_check(request, allowed=['post'])
-        # print(dir(request))
-        # print(request.body)
         data = self.deserialize(request, request.body)
         username = data.get('username')
         password = data.get('password')
-        print(username, password)
         if username is None or password is None:
             raise BadRequest('Please enter a value.')
 
