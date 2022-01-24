@@ -1,14 +1,12 @@
 from distutils.log import Log
 from django.urls import path, include
 from taskapp.api import TaskResource
-from taskapp.authen_api import RegisterResource, LoginResource
+from taskapp.authen_api import AuthResource
 
 task_resource = TaskResource()
-register_resource = RegisterResource()
-login_resource = LoginResource()
+auth_resource = AuthResource()
 
 urlpatterns = [
     path('', include(task_resource.urls)),
-    path('', include(register_resource.urls)),
-    path('', include(login_resource.urls)),
+    path('', include(auth_resource.urls)),
 ]

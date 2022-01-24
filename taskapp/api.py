@@ -11,11 +11,8 @@ class UserResource(ModelResource):
         queryset = User.objects.all()
         resource_name = 'user'
         fields = ['id', 'username']
-        allowed_methods = ['post']
+        allowed_methods = ['get']
         authorization = Authorization()
-
-    def obj_get_list(self, bundle, **kwargs):
-        return super(UserResource, self).obj_get_list(bundle, username=bundle.request.user.username)
 
 class TaskResource(ModelResource):
     creator = fields.ForeignKey(UserResource, attribute='creator', full=True)
@@ -27,11 +24,14 @@ class TaskResource(ModelResource):
         authorization = Authorization()
 
     def obj_create(self, bundle, **kwargs):
-        return super(TaskResource, self).obj_create(bundle, creator=bundle.request.user)
+        assigned_to = bundle.data.get('assigned_to')
+        if assigned_to!=[]:
+            pass
+        else:
+            return super(TaskResource, self).obj_create(bundle, creator=bundle.request.user)
 
     
     def authorized_read_list(self, object_list, bundle):
         # IMPLEMNT - Also the user assigned can read and write 
         return object_list.filter(Q(creator=bundle.request.user) | Q(assigned_to__id=bundle.request.user.id))
 
-        
