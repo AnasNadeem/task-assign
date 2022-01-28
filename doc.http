@@ -15,9 +15,25 @@ Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
 
 {
     "title":"Breakfast",
-    "desctiption":"Yummyy.."
-    
+    "description":"Yummyy.."  
 }
+
+### Task List - PUT
+PUT http://127.0.0.1:8000/api/task/14/ HTTP/1.1
+Content-Type: application/json
+Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+
+{
+    "description":"Yummyy.."  
+}
+
+### User List - GET Schema
+GET http://127.0.0.1:8000/api/user/schema/?format=json HTTP/1.1
+Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+
+### User List - GET with filter
+GET http://127.0.0.1:8000/api/user/?format=json&username=tyrion HTTP/1.1
+Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
 
 ### Register Schema
 GET http://127.0.0.1:8000/api/register/schema/?format=json HTTP/1.1

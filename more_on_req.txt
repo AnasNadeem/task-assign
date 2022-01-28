@@ -1,0 +1,94 @@
+1. Task - POST
+    POST http://127.0.0.1:8000/api/task/ HTTP/1.1
+    Content-Type: application/json
+    Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+
+    {
+        "title":"Breakfast",
+        "description":"Yummyy.."
+        
+    }
+    Note - This request with "title" and "description" will create Task like this:
+    {
+    "meta": {
+        "limit": 20,
+        "next": null,
+        "offset": 0,
+        "previous": null,
+        "total_count": 2
+    },
+    "objects": [
+        {
+        "assigned_to": [],
+        "created_at": "2022-01-25T06:13:38.732278",
+        "creator": {
+            "id": 7,
+            "resource_uri": "",
+            "username": "arya"
+        },
+        "description": "",
+        "id": 14,
+        "progress": "Pending",
+        "resource_uri": "/api/task/14/",
+        "status": "Moderate",
+        "title": "Breakfast",
+        "updated_at": "2022-01-25T06:13:38.732278"
+        }
+    ]
+    }
+
+    As you can see, it auto include the created_at(current time it created) and creator(the authenticated user who makes the request).
+    progress is a dropdown of Pending, Working and Completed.(default=Pending)
+    status - Moderate and Urgent (default=Moderate).
+
+2. Task - POST with assignment
+    POST http://127.0.0.1:8000/api/task/ HTTP/1.1
+    Content-Type: application/json
+    Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+
+    {
+        "title":"Winter is coming",
+        "description":"Be safee..",
+        "assigned_to":[
+            {
+            "id": 5,
+            "username": "tyrion"
+            }
+        ]
+    }
+
+    Create like this: 
+
+    {
+    "meta": {
+        "limit": 20,
+        "next": null,
+        "offset": 0,
+        "previous": null,
+        "total_count": 2
+    },
+    "objects": [
+        {
+        "assigned_to": [
+            {
+            "id": 5,
+            "resource_uri": "",
+            "username": "tyrion"
+            }
+        ],
+        "created_at": "2022-01-24T14:49:38.609985",
+        "creator": {
+            "id": 7,
+            "resource_uri": "",
+            "username": "arya"
+        },
+        "description": "",
+        "id": 13,
+        "progress": "Pending",
+        "resource_uri": "/api/task/13/",
+        "status": "Moderate",
+        "title": "Winter is coming",
+        "updated_at": "2022-01-24T14:49:38.609985"
+        }
+    ]
+    }

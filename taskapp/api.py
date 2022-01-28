@@ -14,6 +14,9 @@ class UserResource(ModelResource):
         fields = ['id', 'username']
         allowed_methods = ['get']
         authorization = Authorization()
+        filtering = {
+            "username":('exact', 'startswith')
+        }
 
 class TaskResource(ModelResource):
     creator = fields.ForeignKey(UserResource, attribute='creator',null=True, full=True)
