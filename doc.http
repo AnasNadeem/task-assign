@@ -1,6 +1,12 @@
 ### Task List Schema
 GET http://127.0.0.1:8000/api/task/schema/?format=json HTTP/1.1
-Authorization: ApiKey tyrion:61de36c3e42b82d2b8ef33d74f86a3652f0ac417
+Content-Type: application/json
+Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+
+### Task List - GET
+GET http://127.0.0.1:8000/api/task/ HTTP/1.1
+Authorization: ApiKey pavan:4b285cef0a606f159da59bf8b826e68460bcd6a2
+
 
 ### Task List - GET
 GET http://127.0.0.1:8000/api/task/ HTTP/1.1
@@ -14,18 +20,38 @@ Content-Type: application/json
 Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
 
 {
-    "title":"Breakfast",
-    "description":"Yummyy.."  
+    "title":"Dinner",
+    "description":"Biryani.."  
 }
 
 ### Task List - PUT
-PUT http://127.0.0.1:8000/api/task/14/ HTTP/1.1
+PUT http://127.0.0.1:8000/api/task/15/ HTTP/1.1
 Content-Type: application/json
 Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
 
 {
-    "description":"Yummyy.."  
+    "description":"Biryani's awesomee."  
 }
+
+### Task List - PUT
+PUT http://127.0.0.1:8000/api/task/15/ HTTP/1.1
+Content-Type: application/json
+Authorization: ApiKey pavan:4b285cef0a606f159da59bf8b826e68460bcd6a2
+
+{
+    "description":"Biryani's bad."  
+}
+
+### Task List - DELETE
+DELETE http://127.0.0.1:8000/api/task/16/ HTTP/1.1
+Content-Type: application/json
+Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+
+
+### Task List - DELETE
+DELETE http://127.0.0.1:8000/api/task/15/ HTTP/1.1
+Content-Type: application/json
+Authorization: ApiKey pavan:4b285cef0a606f159da59bf8b826e68460bcd6a2
 
 ### User List - GET Schema
 GET http://127.0.0.1:8000/api/user/schema/?format=json HTTP/1.1
@@ -44,8 +70,8 @@ POST http://127.0.0.1:8000/api/register/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "username":"arya",
-    "password":"Anas@123"
+    "username":"pavan",
+    "password":"Pavan@123"
 }
 
 ### Login Schema

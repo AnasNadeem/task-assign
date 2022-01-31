@@ -1,11 +1,12 @@
 from tastypie.resources import ModelResource
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from tastypie.authorization import Authorization
 from django.db import IntegrityError
 from tastypie.exceptions import BadRequest
 from tastypie.models import ApiKey
 from django.urls import path
+from tastypie.http import HttpUnauthorized
 
 class AuthResource(ModelResource):
     class Meta:
@@ -21,6 +22,7 @@ class AuthResource(ModelResource):
         return [
             path('register/', self.wrap_view('register'), name="api_register"),
             path('login/', self.wrap_view('login'), name="api_login"),
+            path('logout/', self.wrap_view('logout'), name="api_logout")
         ]
 
     def register(self, request, **kwargs):
@@ -54,8 +56,15 @@ class AuthResource(ModelResource):
         # Check if the user exists
         user = authenticate(username=username, password=password)
         if user:
-            # Getting the API key 
-            api_key = ApiKey.objects.get(user=user.id)
+            login(request, user)
+            # Getting the API key,create if doesn't exist
+            try:
+                api_key = ApiKey.objects.get(user=user)
+                if not api_key.key:
+                    api_key.save()
+            except ApiKey.DoesNotExist:
+                api_key = ApiKey.objects.create(user=user)
+
             return self.create_response(request, {
                     'success': True,
                     'username':username,
@@ -64,3 +73,10 @@ class AuthResource(ModelResource):
         else:
             raise BadRequest("Incorrect username or password.")
     
+    def logout(self, request, **kwargs):
+        self.method_check(request, allowed=['get'])
+        if request.user and request.user.authenticated():
+            logout(request)
+            return self.request.create_response(request, {'success': True})
+        else:
+            return self.request.create_response(request, {'success': False}, HttpUnauthorized)
