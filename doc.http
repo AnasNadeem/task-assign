@@ -70,7 +70,7 @@ POST http://127.0.0.1:8000/api/register/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "username":"pavan",
+    "username":"falak",
     "password":"Pavan@123"
 }
 
@@ -84,6 +84,19 @@ POST http://127.0.0.1:8000/api/login/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "username":"arya",
-    "password":"Anas@123"
+    "username":"falak",
+    "password":"Pavan@123"
 }
+
+### FriendRequest Schema
+GET http://127.0.0.1:8000/api/friend/schema/?format=json HTTP/1.1
+Content-Type: application/json
+Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+
+### FriendRequest - GET
+GET http://127.0.0.1:8000/api/friend/ HTTP/1.1
+Authorization: ApiKey falak:45b2ac2079778fd395fa8aa31ce0653b58d8a4f1
+
+### FriendRequest - GET
+GET http://127.0.0.1:8000/api/friend/ HTTP/1.1
+Authorization: ApiKey pavan:4b285cef0a606f159da59bf8b826e68460bcd6a2
