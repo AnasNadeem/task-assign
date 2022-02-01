@@ -20,8 +20,8 @@ class TaskResourceTest(ResourceTestCaseMixin, TestCase):
         }
 
     def get_credentials(self, user_data):
-        data = self.deserialize(self.api_client.post('/api/register/', format='json', data=user_data))
-        return self.create_apikey(data['username'], data['token'])
+        login_data = self.deserialize(self.api_client.post('/api/login/', format='json', data=user_data))
+        return self.create_apikey(login_data['username'], login_data['token'])
 
     def test_register(self):
         self.assertHttpOK(self.api_client.post('/api/register/', format='json', data=self.user_data))
@@ -41,18 +41,40 @@ class TaskResourceTest(ResourceTestCaseMixin, TestCase):
         self.assertHttpUnauthorized(self.api_client.post('/api/task/', format='json', data=self.task_data))
 
     def test_user_create_task(self):
+        self.api_client.post('/api/register/', format='json', data=self.user_data)
         self.assertHttpCreated(self.api_client.post('/api/task/', format='json',authentication=self.get_credentials(self.user_data), data=self.task_data))
 
-    # def test_user_update_task(self):
-    #     pass
+    def test_user_update_task(self):
+        self.test_user_create_task()
+        created_task = self.deserialize(self.api_client.get('/api/task/', format='json',authentication=self.get_credentials(self.user_data)))
+        update_task_data = {
+            'title':'Last'
+        }
+        self.assertHttpOK(self.api_client.put(f"/api/task/{created_task['objects'][0]['id']}/", format='json',
+            authentication=self.get_credentials(self.user_data), data=update_task_data))
+        updated_task = self.deserialize(self.api_client.get(f"/api/task/", format='json',authentication=self.get_credentials(self.user_data)))
+        self.assertEqual(update_task_data['title'], updated_task['objects'][0]['title'])
 
-    # def test_user_can_view_other_task(self):
-    #     new_user = {
-    #         'username':'test1',
-    #         'password':'test'
-    #     }
-    #     data = self.deserialize(self.api_client.post('/api/task/', format='json',authentication=self.get_credentials(new_user), data=self.task_data))
-    #     self.assertHttpUnauthorized(self.api_client.get(f"/api/task/{data['id']}", format='json',authentication=self.get_credentials(self.user_data)))
+    def test_unauth_user_view_task(self):
+        new_user = {
+            'username':'test1',
+            'password':'test'
+        }
+        self.api_client.post('/api/register/', format='json', data=new_user)
+        des_data = self.deserialize(self.api_client.post('/api/task/', format='json',authentication=self.get_credentials(new_user), data=self.task_data))
+        self.api_client.post('/api/register/', format='json', data=self.user_data)
+        self.assertHttpUnauthorized(self.api_client.get(f"/api/task/{des_data['id']}/", format='json',authentication=self.get_credentials(self.user_data)))
 
-    # def test_user_can_edit_other_task(self):
-    #     pass
+    def test_unauth_user_edit_task(self):
+        self.test_user_create_task()
+        created_task = self.deserialize(self.api_client.get('/api/task/', format='json',authentication=self.get_credentials(self.user_data)))
+        update_task_data = {
+            'title':'Last'
+        }
+        new_user = {
+            'username':'test1',
+            'password':'test'
+        }
+        self.api_client.post('/api/register/', format='json', data=new_user)
+        self.assertHttpUnauthorized(self.api_client.put(f"/api/task/{created_task['objects'][0]['id']}/", format='json',
+            authentication=self.get_credentials(new_user), data=update_task_data))
