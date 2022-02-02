@@ -5,6 +5,8 @@ from tastypie.authorization import Authorization
 from django.contrib.auth.models import User
 from tastypie import fields
 from taskapp.authorization import TaskAuthorization, FriendAuthorization
+from tastypie.exceptions import BadRequest
+from tastypie.constants import ALL, ALL_WITH_RELATIONS
 
 class UserResource(ModelResource):
     class Meta:
@@ -36,9 +38,11 @@ class ProfileResource(ModelResource):
     class Meta:
         queryset = Profile.objects.all()
         resource_name = 'profile'
-        # fields = ['id', 'username']
         allowed_methods = ['get']
         authorization = Authorization()
+        filtering = {
+            "user":ALL_WITH_RELATIONS
+        }
 
 class FriendResource(ModelResource):
     sender = fields.ForeignKey(ProfileResource, attribute='sender',null=True, full=True)
@@ -50,6 +54,7 @@ class FriendResource(ModelResource):
         authorization = FriendAuthorization()
         always_return_data = True
 
-    # def obj_create(self, bundle, **kwargs):
-    #     bundle = self.full_hydrate(bundle)    
-    #     return super(FriendResource, self).obj_create(bundle, sender=bundle.request.user)
+    def obj_create(self, bundle, **kwargs):
+        bund_data = self.full_hydrate(bundle)    
+        user_prof = Profile.objects.get(user=bundle.request.user)
+        return super(FriendResource, self).obj_create(bund_data, sender=user_prof)

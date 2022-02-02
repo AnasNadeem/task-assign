@@ -33,7 +33,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # image = models.ImageField(upload_to='image', blank=True)
     friends = models.ManyToManyField(User, blank=True, related_name="profiles")
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -50,8 +50,8 @@ class FriendRequestManager(models.Manager):
         return qs 
 
 class FriendRequest(models.Model):
-    sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="sender")
-    receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="receiver")
+    sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="senders")
+    receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="receivers")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='send')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -1,33 +1,30 @@
 ### Task List Schema
 GET http://127.0.0.1:8000/api/task/schema/?format=json HTTP/1.1
-Content-Type: application/json
-Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
 
 ### Task List - GET
 GET http://127.0.0.1:8000/api/task/ HTTP/1.1
-Authorization: ApiKey pavan:4b285cef0a606f159da59bf8b826e68460bcd6a2
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
 
 
 ### Task List - GET
 GET http://127.0.0.1:8000/api/task/ HTTP/1.1
-Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
-
-# Authorization: ApiKey tyrion:61de36c3e42b82d2b8ef33d74f86a3652f0ac417
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
 
 ### Task List - POST
 POST http://127.0.0.1:8000/api/task/ HTTP/1.1
 Content-Type: application/json
-Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
 
 {
-    "title":"Dinner",
-    "description":"Biryani.."  
+    "title":"AOT",
+    "description":"Masterpiece"  
 }
 
 ### Task List - PUT
 PUT http://127.0.0.1:8000/api/task/17/ HTTP/1.1
 Content-Type: application/json
-Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
 
 {
     "title":"Who's awesomee?"  
@@ -36,7 +33,7 @@ Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
 ### Task List - PUT
 PUT http://127.0.0.1:8000/api/task/15/ HTTP/1.1
 Content-Type: application/json
-Authorization: ApiKey pavan:4b285cef0a606f159da59bf8b826e68460bcd6a2
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
 
 {
     "description":"Biryani's bad."  
@@ -45,21 +42,21 @@ Authorization: ApiKey pavan:4b285cef0a606f159da59bf8b826e68460bcd6a2
 ### Task List - DELETE
 DELETE http://127.0.0.1:8000/api/task/16/ HTTP/1.1
 Content-Type: application/json
-Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
 
 
 ### Task List - DELETE
 DELETE http://127.0.0.1:8000/api/task/15/ HTTP/1.1
 Content-Type: application/json
-Authorization: ApiKey pavan:4b285cef0a606f159da59bf8b826e68460bcd6a2
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
 
 ### User List - GET Schema
 GET http://127.0.0.1:8000/api/user/schema/?format=json HTTP/1.1
-Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
 
 ### User List - GET with filter
-GET http://127.0.0.1:8000/api/user/?format=json&username=tyrion HTTP/1.1
-Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+GET http://127.0.0.1:8000/api/user/?format=json&username=fala HTTP/1.1
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
 
 ### Register Schema
 GET http://127.0.0.1:8000/api/register/schema/?format=json HTTP/1.1
@@ -70,8 +67,8 @@ POST http://127.0.0.1:8000/api/register/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "username":"falak",
-    "password":"Pavan@123"
+    "username":"arya",
+    "password":"Anas@123"
 }
 
 ### Login Schema
@@ -84,19 +81,57 @@ POST http://127.0.0.1:8000/api/login/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "username":"falak",
-    "password":"Pavan@123"
+    "username":"arya",
+    "password":"Anas@123"
 }
 
 ### FriendRequest Schema
 GET http://127.0.0.1:8000/api/friend/schema/?format=json HTTP/1.1
 Content-Type: application/json
-Authorization: ApiKey arya:6284ad0f9d76354cc209e61d8afab09c18ce6669
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
 
 ### FriendRequest - GET
 GET http://127.0.0.1:8000/api/friend/ HTTP/1.1
-Authorization: ApiKey falak:45b2ac2079778fd395fa8aa31ce0653b58d8a4f1
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
 
 ### FriendRequest - GET
 GET http://127.0.0.1:8000/api/friend/ HTTP/1.1
-Authorization: ApiKey pavan:4b285cef0a606f159da59bf8b826e68460bcd6a2
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
+
+### FriendRequest - POST
+POST http://127.0.0.1:8000/api/friend/ HTTP/1.1
+Content-Type: application/json
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
+
+{
+    
+    "receiver":{
+        "created_at": "2022-02-02T11:30:33.545341",
+        "id": 8,
+        "resource_uri": "/api/profile/8/",
+        "updated_at": "2022-02-02T11:30:33.545341",
+        "user": {
+            "id": 11,
+            "resource_uri": "/api/user/11/",
+            "username": "falak"
+        }
+    }
+}
+
+### FriendRequest - PUT
+PUT http://127.0.0.1:8000/api/friend/1/ HTTP/1.1
+Content-Type: application/json
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
+
+{
+    "status":"accepted"
+}
+
+### FriendRequest - DELETE
+DELETE http://127.0.0.1:8000/api/friend/1/ HTTP/1.1
+Content-Type: application/json
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
+
+### Profile - GET
+GET http://127.0.0.1:8000/api/profile/?format=json&user__username=falak HTTP/1.1
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
