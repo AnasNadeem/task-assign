@@ -5,7 +5,6 @@ from tastypie.authorization import Authorization
 from django.contrib.auth.models import User
 from tastypie import fields
 from taskapp.authorization import TaskAuthorization, FriendAuthorization
-from tastypie.exceptions import BadRequest
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 
 class UserResource(ModelResource):
@@ -35,6 +34,7 @@ class TaskResource(ModelResource):
 
 class ProfileResource(ModelResource):
     user = fields.ForeignKey(UserResource, attribute='user',null=True, full=True)
+    friends = fields.ToManyField(UserResource, attribute='friends', null=True,blank=True, full=True)
     class Meta:
         queryset = Profile.objects.all()
         resource_name = 'profile'

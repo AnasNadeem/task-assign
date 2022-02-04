@@ -61,7 +61,7 @@ Now Open Terminal or Shell.
     "title":"<title>",
     "description":"<description>",
     "status":"<status>",
-    "progress":"<progress>",
+    "priority":"<priority>",
     "assigned_to":[]
 }
 ```
