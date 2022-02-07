@@ -1,3 +1,4 @@
+from django.dispatch import receiver
 from tastypie.resources import ModelResource
 from taskapp.models import Task, Profile, FriendRequest
 from tastypie.authentication import ApiKeyAuthentication
@@ -6,6 +7,8 @@ from django.contrib.auth.models import User
 from tastypie import fields
 from taskapp.authorization import TaskAuthorization, FriendAuthorization
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
+from django.db import IntegrityError
+from tastypie.exceptions import BadRequest
 
 class UserResource(ModelResource):
     class Meta:
@@ -61,7 +64,11 @@ class FriendResource(ModelResource):
         authorization = FriendAuthorization()
         always_return_data = True
 
+    def hydrate_receiver(self, bundle):
+        bundle.data['receiver'] = Profile.objects.get(user__username=bundle.data['receiver'])
+        return bundle
+
     def obj_create(self, bundle, **kwargs):
-        bund_data = self.full_hydrate(bundle)    
+        bund_data = self.full_hydrate(bundle)
         user_prof = Profile.objects.get(user=bundle.request.user)
         return super(FriendResource, self).obj_create(bund_data, sender=user_prof)
