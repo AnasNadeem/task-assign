@@ -1,0 +1,13 @@
+
+### User List - GET Schema
+GET http://127.0.0.1:8000/api/user/schema/?format=json HTTP/1.1
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
+
+### User List - GET with filter
+GET http://127.0.0.1:8000/api/user/?format=json&username=fala HTTP/1.1
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
+
+
+### User List - GET with filter
+GET http://127.0.0.1:8000/api/user/12/ HTTP/1.1
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6

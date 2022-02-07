@@ -13,6 +13,7 @@ class UserResource(ModelResource):
         resource_name = 'user'
         fields = ['id', 'username']
         allowed_methods = ['get']
+        authentication = ApiKeyAuthentication()
         authorization = Authorization()
         filtering = {
             "username":('exact', 'startswith')
@@ -27,6 +28,11 @@ class TaskResource(ModelResource):
         authentication = ApiKeyAuthentication()
         authorization = TaskAuthorization()
         always_return_data = True
+        filtering = {
+            'creator':ALL_WITH_RELATIONS,
+            'assigned_to':ALL_WITH_RELATIONS,
+            'created_at': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
+        }
 
     def obj_create(self, bundle, **kwargs):
         bundle = self.full_hydrate(bundle)    
@@ -39,6 +45,7 @@ class ProfileResource(ModelResource):
         queryset = Profile.objects.all()
         resource_name = 'profile'
         allowed_methods = ['get']
+        authentication = ApiKeyAuthentication()
         authorization = Authorization()
         filtering = {
             "user":ALL_WITH_RELATIONS

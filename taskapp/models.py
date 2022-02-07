@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import User
 from django.db import models
@@ -10,21 +11,22 @@ TASK_PRIORITY = [
     ('Urgent', 'Urgent'),
 ]
 
-TASK_STATUS = [
-    ('Pending', 'Pending'),
-    ('Working', 'Working'),
-    ('Completed', 'Completed'),
-]
+# TASK_STATUS = [
+#     ('Pending', 'Pending'),
+#     ('Working', 'Working'),
+#     ('Completed', 'Completed'),
+# ]
 
 class Task(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     priority = models.CharField(max_length=12, choices=TASK_PRIORITY, default='Moderate')
-    status = models.CharField(max_length=12, choices=TASK_STATUS, default='Pending')
+    # status = models.CharField(max_length=12, choices=TASK_STATUS, default='Pending')
+    status = models.BooleanField(default=False)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     assigned_to = models.ManyToManyField(User, blank=True, related_name='assigned')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.title
@@ -33,8 +35,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # image = models.ImageField(upload_to='image', blank=True)
     friends = models.ManyToManyField(User, blank=True, related_name="profiles")
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateField(auto_now_add=True, null=True)
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.user.username
@@ -53,8 +55,8 @@ class FriendRequest(models.Model):
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="senders")
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="receivers")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='send')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     objects = FriendRequestManager()
 
