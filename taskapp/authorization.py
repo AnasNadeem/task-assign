@@ -66,3 +66,7 @@ class FriendAuthorization(Authorization):
             return True
         else:
             return False
+
+class ProfileAuthorization(Authorization):
+    def read_list(self, object_list, bundle):
+        return object_list.filter(user__username=bundle.request.user)

@@ -2,9 +2,13 @@
 GET http://127.0.0.1:8000/api/friend/ HTTP/1.1
 Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
 
-### FriendRequest - GET
+### FriendRequest - GET FriendRequest send to Arya
 GET http://127.0.0.1:8000/api/friend/ HTTP/1.1
 Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
+
+### FriendRequest - GET FriendRequest send to Falak
+GET http://127.0.0.1:8000/api/friend/ HTTP/1.1
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
 
 ### FriendRequest - POST
 POST http://127.0.0.1:8000/api/friend/ HTTP/1.1
@@ -16,19 +20,19 @@ Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
 }
 
 ### FriendRequest - PUT
-PUT http://127.0.0.1:8000/api/friend/2/ HTTP/1.1
+PUT http://127.0.0.1:8000/api/friend/6/ HTTP/1.1
 Content-Type: application/json
-Authorization: ApiKey anas:6a504cc86160b4c138e47816e6dd25b59ce4c841
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
 
 {
     "status":"accepted"
 }
 
 ### FriendRequest - DELETE
-DELETE http://127.0.0.1:8000/api/friend/1/ HTTP/1.1
+DELETE http://127.0.0.1:8000/api/friend/4/ HTTP/1.1
 Content-Type: application/json
 Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353
 
-### Profile - GET
-GET http://127.0.0.1:8000/api/profile/?format=json&user__username=anas HTTP/1.1
+### Profile - GET Your Profile
+GET http://127.0.0.1:8000/api/profile/ HTTP/1.1
 Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353

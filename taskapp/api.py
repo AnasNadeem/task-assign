@@ -5,10 +5,13 @@ from tastypie.authentication import ApiKeyAuthentication
 from tastypie.authorization import Authorization
 from django.contrib.auth.models import User
 from tastypie import fields
-from taskapp.authorization import TaskAuthorization, FriendAuthorization
+from taskapp.authorization import (
+    TaskAuthorization,
+    FriendAuthorization, 
+    ProfileAuthorization)
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
-from django.db import IntegrityError
 from tastypie.exceptions import BadRequest
+from django.db.models import Q
 
 class UserResource(ModelResource):
     class Meta:
@@ -49,10 +52,7 @@ class ProfileResource(ModelResource):
         resource_name = 'profile'
         allowed_methods = ['get']
         authentication = ApiKeyAuthentication()
-        authorization = Authorization()
-        filtering = {
-            "user":ALL_WITH_RELATIONS
-        }
+        authorization = ProfileAuthorization()
 
 class FriendResource(ModelResource):
     sender = fields.ForeignKey(ProfileResource, attribute='sender',null=True, full=True)
@@ -64,11 +64,19 @@ class FriendResource(ModelResource):
         authorization = FriendAuthorization()
         always_return_data = True
 
-    def hydrate_receiver(self, bundle):
-        bundle.data['receiver'] = Profile.objects.get(user__username=bundle.data['receiver'])
-        return bundle
-
     def obj_create(self, bundle, **kwargs):
-        bund_data = self.full_hydrate(bundle)
         user_prof = Profile.objects.get(user=bundle.request.user)
-        return super(FriendResource, self).obj_create(bund_data, sender=user_prof)
+        receiver_data = bundle.data.get('receiver', '')
+        if receiver_data=='':
+            raise BadRequest(f"Include receiver.")
+        receiver_prof = Profile.objects.filter(user__username=receiver_data)
+        if receiver_prof:
+            # Check if the FriendRequest exist or not 
+            frnd_req = FriendRequest.objects.filter(Q(sender=user_prof) | Q(receiver=receiver_prof[0]))
+            if frnd_req:
+                raise BadRequest(f"Already {frnd_req[0].status}")
+            new_frnd_req = FriendRequest.objects.create(sender=user_prof, receiver=receiver_prof[0])
+            bundle.obj = new_frnd_req
+            return bundle
+        else:
+            raise BadRequest(f"Invalid username.")
