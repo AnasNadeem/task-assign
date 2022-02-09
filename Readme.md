@@ -9,7 +9,7 @@ Now Open Terminal or Shell.
 ### Steps:
 1. ```python3 -m venv env```
 2. If on mac or linux: ```source env/bin/activate```. Windows: ```.\env\scripts\activate```
-3. ``` python -m pip install requirements.txt ```
+3. ``` python -m pip install -r requirements.txt ```
 4. ``` python manage.py runserver ```
 
 

@@ -1,0 +1,3 @@
+### Profile - GET Your Profile
+GET http://127.0.0.1:8000/api/profile/ HTTP/1.1
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353 

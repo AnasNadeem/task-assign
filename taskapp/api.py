@@ -72,7 +72,7 @@ class FriendResource(ModelResource):
         receiver_prof = Profile.objects.filter(user__username=receiver_data)
         if receiver_prof:
             # Check if the FriendRequest exist or not 
-            frnd_req = FriendRequest.objects.filter(Q(sender=user_prof) | Q(receiver=receiver_prof[0]))
+            frnd_req = FriendRequest.objects.filter((Q(sender=user_prof) & Q(receiver=receiver_prof[0])) | (Q(sender=receiver_prof[0]) & Q(receiver=user_prof)))
             if frnd_req:
                 raise BadRequest(f"Already {frnd_req[0].status}")
             new_frnd_req = FriendRequest.objects.create(sender=user_prof, receiver=receiver_prof[0])
