@@ -70,3 +70,11 @@ class FriendAuthorization(Authorization):
 class ProfileAuthorization(Authorization):
     def read_list(self, object_list, bundle):
         return object_list.filter(user__username=bundle.request.user)
+
+class ChatAuthorization(Authorization):
+    def get_profile(self, bundle):
+        return Profile.objects.get(user=bundle.request.user)
+
+    def read_list(self, object_list, bundle):
+        profile = self.get_profile(bundle)
+        return object_list.filter(participant__id=profile.id)

@@ -1,6 +1,5 @@
-from django.dispatch import receiver
 from tastypie.resources import ModelResource
-from taskapp.models import Task, Profile, FriendRequest
+from taskapp.models import Task, Profile, FriendRequest, Chat
 from tastypie.authentication import ApiKeyAuthentication
 from tastypie.authorization import Authorization
 from django.contrib.auth.models import User
@@ -8,7 +7,8 @@ from tastypie import fields
 from taskapp.authorization import (
     TaskAuthorization,
     FriendAuthorization, 
-    ProfileAuthorization)
+    ProfileAuthorization,
+    ChatAuthorization)
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.exceptions import BadRequest
 from django.db.models import Q
@@ -80,3 +80,12 @@ class FriendResource(ModelResource):
             return bundle
         else:
             raise BadRequest(f"Invalid username.")
+
+class ChatResource(ModelResource):
+    # participant = fields.ToManyField(ProfileResource, attribute='participants', null=True,blank=True, full=True)
+    class Meta:
+        queryset = Chat.objects.all()
+        resource_name = 'chat'
+        allowed_methods = ['get']
+        authentication = ApiKeyAuthentication()
+        authorization = ChatAuthorization()

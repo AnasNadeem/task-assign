@@ -1,0 +1,11 @@
+### Chat - GET Your Chat
+GET http://127.0.0.1:8000/api/chat/ HTTP/1.1
+Authorization: ApiKey falak:9ff0f1a1a03302ed670a22c7a81a1eac50012353 
+
+### Chat - GET Your Chat
+GET http://127.0.0.1:8000/api/chat/ HTTP/1.1
+Authorization: ApiKey arya:09cf641edad3619ace2cd606391332123502eef6
+
+### Chat - GET Your Chat
+GET http://127.0.0.1:8000/api/chat/ HTTP/1.1
+Authorization: ApiKey anas:6a504cc86160b4c138e47816e6dd25b59ce4c841
