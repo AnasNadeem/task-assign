@@ -82,6 +82,7 @@ class FriendResource(ModelResource):
             raise BadRequest(f"Invalid username.")
 
 class MessageResource(ModelResource):
+    sender_profile = fields.ForeignKey(ProfileResource, attribute='sender_profile',null=True, full=True)
     class Meta:
         queryset = Message.objects.all()
         resource_name = 'message'
